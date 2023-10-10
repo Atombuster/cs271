@@ -1,0 +1,15 @@
+not, done
+and, done
+or, done
+xor, done
+Mux, done
+Dmux, done
+not16, done
+and16, done
+or16, done
+mux16,done
+or8way, done
+mux4way16,
+mux8way16,
+dmux4way, done
+8mux8way, done
