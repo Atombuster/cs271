@@ -15,4 +15,6 @@ CHIP Bit {
 
     PARTS:
     // Put your code here:
+	Mux(a=ouroboros, b=in, sel=load, out=Mout);
+	DFF(in=Mout, out=ouroboros, out=out);
 }
