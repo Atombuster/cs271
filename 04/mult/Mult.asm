@@ -10,3 +10,31 @@
 // R0 >= 0, R1 >= 0, and R0*R1 < 32768.
 
 // Put your code here.
+
+
+	@R2 //load r2
+	M=0 //set r2 to 0
+	@R1 //load r1
+	D=M // D = r1
+	@Invi
+	D;JEQ  // in cause of a 0
+	
+	(Checkpoint)
+	@R2 //load r2
+	D=M //r2 value
+	
+	@R0 //Load r
+	D=D+M //add
+	@R2 
+	M=D
+	@R1
+	D=M-1 // decrease R1
+	M=D
+	@Checkpoint
+	D;JNE // to do math
+	
+	
+	 (Invi)
+	 @Invi
+	 0;JMP
+	 
