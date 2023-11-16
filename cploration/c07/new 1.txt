@@ -1,0 +1,15 @@
+Continuing in symtable.h, let's define our structure to 
+represent a single data item//
+
+Let's call it Symbol.//
+
+This structure will group a string (the name) and a hack_addr (the address).
+
+We will use it to lookup an address (value) given the string name (key).
+
+Adapt the DataItem from the tutorial to match the structure describes above. 
+
+Make sure to select the right types. 
+
+And change the variable names to name and addr to suit our program.
+
