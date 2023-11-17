@@ -16,10 +16,10 @@ int hash(char *str){
 void symtable_insert(char *name, hack_addr addr){
 	Symbol *item = (Symbol*) malloc(sizeof(Symbol));
 	item->addr = addr;  
-	item->name = name;
+	item->name = strdup(name);
 	//test
-	printf("KEY INSERTED TO SYMTABLE: %s\n",name);
-	printf("ADDR INSERTED TO SYMTABLE: %d\n",addr);
+	//printf("KEY INSERTED TO SYMTABLE: %s\n",name);
+	//printf("ADDR INSERTED TO SYMTABLE: %d\n",addr);
 	//get the hash 
 	int hashIndex = hash(name);
 
