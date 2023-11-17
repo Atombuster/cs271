@@ -8,7 +8,6 @@
 #include "parser.h"
 #include "symtable.h"
 
-
 //We start with an empty main(..) function that accepts arguments. 
 int main(int argc, const char *argv[]) {		
 
@@ -26,7 +25,7 @@ int main(int argc, const char *argv[]) {
 	}
 	
 	parse(fin);
-	
+	symtable_print_labels();
 	//Close the file pointers
 	fclose(fin);
 	return 0;		

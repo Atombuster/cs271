@@ -16,10 +16,6 @@ typedef struct Symbol {
 	char *name;
 }Symbol;
 
-Symbol* hashArray[SYMBOL_TABLE_SIZE]; 
-Symbol* dummyItem;
-Symbol* item;
-
 int hash(char *str);
 Symbol *symtable_find(char *key);
 void symtable_insert(char *key, hack_addr addr);

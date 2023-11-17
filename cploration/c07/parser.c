@@ -5,6 +5,7 @@
  * [TERM] FALL $2023$
  * 
  ****************************************/
+#include "symtable.h"
 #include "parser.h"
 
 /* Function: strip
@@ -57,14 +58,21 @@ void parse(FILE * fin){
 		//inst_type=(is_Ctype(line))? 'C':inst_type;
 		
 		if (!(*line)){
-			ROM_line++;
 			continue;		
 		}
+		ROM_line++;
 		char label[MAX_LABEL_LENGTH] = {0};
-		strcpy(line, extract_label(line, label));
+		if (is_label(line)) {
 		
+			strcpy(line, extract_label(line, label));
 		//printf("%c  %s\n", inst_type, line);
-		symtable_insert(label, ROM_line);
+			symtable_insert(line, ROM_line);
+				ROM_line--;
+		}
+
+		
+		
+		
 
 	}
 	
@@ -98,7 +106,7 @@ bool is_Ctype(const char *line){
 char *extract_label(const char *line, char *label){
 	
 	int i=0;
-	for (char *line2 = line; *line2; line2++) { 
+	for (const char *line2 = line; *line2; line2++) { 
 		if ((*line2 == '(') || (*line2 == ')')) {
 		continue;
 		}

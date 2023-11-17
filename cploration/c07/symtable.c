@@ -5,7 +5,7 @@ Symbol* hashArray[SYMBOL_TABLE_SIZE];
 int hash(char *str){
     unsigned long hash = 5381;
     int c;
-
+	
     while ((c = *str++)) {
         hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
 	}
@@ -13,13 +13,15 @@ int hash(char *str){
 	
 }
 	
-void symtable_insert(char *key, hack_addr addr){
+void symtable_insert(char *name, hack_addr addr){
 	Symbol *item = (Symbol*) malloc(sizeof(Symbol));
 	item->addr = addr;  
-	item->name = key;
-
+	item->name = name;
+	//test
+	printf("KEY INSERTED TO SYMTABLE: %s\n",name);
+	printf("ADDR INSERTED TO SYMTABLE: %d\n",addr);
 	//get the hash 
-	int hashIndex = hash(key);
+	int hashIndex = hash(name);
 
 	//move in array until an empty or deleted cell
 	while(hashArray[hashIndex] != NULL && hashArray[hashIndex]->name) {
@@ -27,20 +29,20 @@ void symtable_insert(char *key, hack_addr addr){
       ++hashIndex;
 		
       //wrap around the table
-      hashIndex %= SYMBOL_TABLE_SIZE;
+     hashIndex %= SYMBOL_TABLE_SIZE;
    }
 	
    hashArray[hashIndex] = item;
 }
 
-Symbol *symtable_find(char *key) {
+Symbol *symtable_find(char *name) {
    //get the hash 
-   int hashIndex = hash(key);  
+   int hashIndex = hash(name);  
 	
    //move in array until an empty 
    while(hashArray[hashIndex] != NULL) {
 	
-      if(hashArray[hashIndex]->name == key)
+      if(hashArray[hashIndex]->name == name)
          return hashArray[hashIndex]; 
 			
       //go to next cell
@@ -59,7 +61,7 @@ void symtable_display_table() {
    for(i = 0; i<SYMBOL_TABLE_SIZE; i++) {
 	
       if(hashArray[i] != NULL)
-         printf(" (%s,%d)",hashArray[i]->name,hashArray[i]->addr);
+         printf(" (%s,%d)",(hashArray[i]->name),hashArray[i]->addr);
       else
          printf(" ~~ ");
    }
