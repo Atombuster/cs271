@@ -222,33 +222,43 @@ void assemble(const char * file_name, instruction* instructions, int num_instruc
         printf("Error opening file!\n");
         exit(1);
     }
-	 
-	
-		for(int i = 0; i < num_instructions; i++){
-			opcode op;
-			//printf("Number test! %d\n", i);
-			instruction instr = instructions[i];
-			//printf("%d\n", instructions[i].data.a.is_address);
-			if (instructions[i].type == A_type){
-				//printf("A-type! \n");
-				if (instr.data.a.is_address){
-					//printf("A: %d\n", instr.data.a.data.address);
-					op = instr.data.a.data.address;
+	hack_addr Inserttable = 16;
+	//symtable_display_table();
+	for(int i = 0; i < num_instructions; i++){
+		opcode op = 0;
+		//printf("Number test! %d\n", i);
+		instruction instr = instructions[i];
+		//printf("%d\n", instructions[i].data.a.is_address);
+		if (instructions[i].type == A_type){
+			//printf("A-type! \n");
+			if (instr.data.a.is_address){
+				//printf("A: %d\n", instr.data.a.data.address);
+				op = instr.data.a.data.address;
+			}
+			if (!instr.data.a.is_address){
+				//printf("A: %s\n", instr.data.a.data.label);
+				//printf("Number test! %d\n", i);
+				Symbol *OP_Foundsymb = symtable_find(instr.data.a.data.label);
+				if (OP_Foundsymb == NULL){
+					symtable_insert(instr.data.a.data.label, Inserttable);
+					Inserttable++;
+					OP_Foundsymb = symtable_find(instr.data.a.data.label);
 				}
-				if (!instr.data.a.is_address){
-					//printf("A: %s\n", instr.data.a.data.label);
-					op = symtable_find(instr.data.a.data.label);
-					
+				//printf("test %d\n", fish->addr);
+				op = OP_Foundsymb->addr;
+				
+				
 			}
 			
-			}
-			if (instructions[i].type == C_type){
-				//printf("C-type! \n");
-				//printf("C: d=%d, c=%d, j=%d\n", instr.data.c.dest, instr.data.c.comp, instr.data.c.jump);
-				op = instruction_to_opcode(instr.data.c);
+		}else if (instructions[i].type == C_type){
+			//printf("C-type! \n");
+			//printf("C: d=%d, c=%d, j=%d\n", instr.data.c.dest, instr.data.c.comp, instr.data.c.jump);
+			op = instruction_to_opcode(instr.data.c);
 			
-			}
-		fprintf(hack, OPCODE_TO_BINARY(op));
+		}
+		
+		//printf("%d\n", op);
+		fprintf(hack, "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", OPCODE_TO_BINARY(op));
 		
 	}
     
@@ -264,7 +274,7 @@ opcode instruction_to_opcode(c_instruction instr){
 	op |= (instr.a << 12);
 	op |= (instr.comp << 6);
 	op |= (instr.dest << 3);
-	op |= (instr.jump << 0);
+	op |= (instr.jump);
 	
 	return op;
 }
